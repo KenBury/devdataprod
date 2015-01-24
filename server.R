@@ -1,15 +1,12 @@
 library(shiny)
 library(plyr)
 
+# This sets up the classes and the initial ratio values for each class. 
 dfclass_id = data.frame (class_id = c("AA", "AB", "AC", "BA", "BB", "BC"), ratio = c(2.5, 3.0, 1.5, 2.0, 4.0, 2.2))
+
 shinyServer(function(input, output) {
         
-        # Expression that generates a histogram. The expression is
-        # wrapped in a call to renderPlot to indicate that:
-        #
-        #  1) It is "reactive" and therefore should re-execute automatically
-        #     when inputs change
-        #  2) Its output type is a plot
+        # This generates the main data set as the values are changed
         
         dfData <- reactive({
                 dfnode_id <- data.frame (node_id = paste0 (sample(LETTERS[1:10], replace = TRUE), seq(1:input$no_node)),
@@ -27,15 +24,18 @@ shinyServer(function(input, output) {
                 dfnode_id
         })
         
+        # This generates the values that the kmeans is going to consider
         selectedData <- reactive({
                 dfnode_id <- dfData()
                 dfnode_id[, c("ratio", "ratio")]
         })
         
+        # This captures the kmeans output
         clusters <- reactive({
                 kmeans(selectedData(), input$no_class)
         })
         
+        # This renders the data table
         output$dfnode_id <- renderDataTable({
                 
                 dfData()
@@ -43,9 +43,7 @@ shinyServer(function(input, output) {
         }, options=list(pageLength=10))
         
         
-        
-        
-        
+        # This renders the kmeans plot
         output$plot1 <- renderPlot({
                 par(mar = c(5.1, 4.1, 0, 1))
                 plot(selectedData(),
