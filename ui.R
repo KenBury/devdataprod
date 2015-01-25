@@ -19,7 +19,7 @@ shinyUI(fluidPage(
                                 "Adjust the number of classes and nodes",
                                 "using the sliders. The data and plot output",
                                 "are selected using the tabs. The data plot shows the simulated data and the predicted ratios are identified by the 'X's on the graph",
-                                "This is a part of the assignment for the Coursera - John Hopkins - Developing Data Products course.",
+                                "This is a part of the assignment for the Coursera - Johns Hopkins - Developing Data Products course.",
                                 "Prepared by Ken Bury, 01/25/2015.")                    
                 ),   
                       
